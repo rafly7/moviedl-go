@@ -9,7 +9,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func Download() *[]models.LinkBypass {
+func (s *Collector) Download(slug string) *[]models.LinkBypass {
 	arr := &[]models.LinkBypass{}
 	c := Scrap()
 	c.OnHTML("tbody", func(h *colly.HTMLElement) {
@@ -28,6 +28,7 @@ func Download() *[]models.LinkBypass {
 	c.OnRequest(func(r *colly.Request) {
 		fmt.Println(r.Method, "data with url:", r.URL.String())
 	})
-	c.Request("POST", "http://dl.sharemydrive.xyz/verifying.php", strings.NewReader(`slug=doctor-strange-in-the-multiverse-of-madness-2022`), nil, http.Header{"Content-Type": []string{"application/x-www-form-urlencoded"}})
+	payload := fmt.Sprintf("slug=%s", slug)
+	c.Request("POST", "http://dl.sharemydrive.xyz/verifying.php", strings.NewReader(payload), nil, http.Header{"Content-Type": []string{"application/x-www-form-urlencoded"}})
 	return arr
 }

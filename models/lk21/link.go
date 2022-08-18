@@ -1,6 +1,6 @@
 package lk21
 
 type LinkBypass struct {
-	Type string
-	Link string
+	Type string `json:"type"`
+	Link string `json:"link"`
 }

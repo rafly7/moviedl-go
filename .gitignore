@@ -1,1 +1,4 @@
 user_agent.txt
+.dev.env
+.prod.env
+.test.env

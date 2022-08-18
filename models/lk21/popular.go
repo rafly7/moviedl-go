@@ -1,8 +1,8 @@
 package lk21
 
 type Popular struct {
-	Title      string
-	ImageSrc   string
-	SlugBypass string
-	Rating     string
+	Title      string `json:"title"`
+	ImageSrc   string `json:"image_src"`
+	SlugBypass string `json:"slug"`
+	Rating     string `json:"rating"`
 }

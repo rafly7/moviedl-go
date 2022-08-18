@@ -2,13 +2,14 @@ package lk21
 
 import (
 	"fmt"
+	"log"
 	models "moviedl/models/lk21"
 	"strings"
 
 	"github.com/gocolly/colly/v2"
 )
 
-func Latest(page int) *[]models.Latest {
+func (s *Collector) Latest(page int) *[]models.Latest {
 	arr := &[]models.Latest{}
 
 	reGenre, err := reGenre()
@@ -33,19 +34,19 @@ func Latest(page int) *[]models.Latest {
 		h.ForEach(".mega-item", func(i int, h *colly.HTMLElement) {
 			href := h.ChildAttr("figure a", "href")
 			href = findSlugBypass(reSlugBypass, href)
-			fmt.Println(href)
+			// fmt.Println(href)
 
 			imgSrc := h.ChildAttr("figure a img", "src")
 			imgSrc = findSrcImg(reImgSrc, imgSrc)
-			fmt.Println(imgSrc)
+			// fmt.Println(imgSrc)
 
 			rating := h.ChildText(".rating")
-			fmt.Println(rating)
+			// fmt.Println(rating)
 
 			title := h.ChildText(".grid-header h1 a")
 			spt := strings.Split(title, " Film Subtitle Indonesia Streaming Movie Download")
 			title = strings.Split(spt[0], "Nonton ")[1]
-			fmt.Println(title)
+			// fmt.Println(title)
 
 			genres := &[]string{}
 			h.ForEach(".grid-categories", func(i int, sc *colly.HTMLElement) {
@@ -58,7 +59,7 @@ func Latest(page int) *[]models.Latest {
 				}
 				// fmt.Println(ca)
 			})
-			fmt.Println(*genres)
+			// fmt.Println(*genres)
 			*arr = append(*arr, models.Latest{
 				Title:      title,
 				ImageSrc:   imgSrc,
@@ -66,10 +67,16 @@ func Latest(page int) *[]models.Latest {
 				Rating:     rating,
 				Genres:     *genres,
 			})
-			fmt.Println()
 		})
+	})
+	c.OnError(func(r *colly.Response, err error) {
+		log.Print(err)
+	})
+	c.OnRequest(func(r *colly.Request) {
+		log.Println(r.URL.String())
 	})
 	url := fmt.Sprintf("https://lk21.コム/latest/page/%d", page)
 	c.Visit(url)
+	// c.Wait()
 	return arr
 }

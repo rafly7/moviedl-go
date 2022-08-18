@@ -8,7 +8,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func SearchByTitle(search string) *[]models.Movie {
+func (s *Collector) SearchByTitle(search string) *[]models.Movie {
 	// var movies = []models.Movie{}
 
 	arr := &[]models.Movie{}

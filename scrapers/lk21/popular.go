@@ -6,7 +6,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func Popular() *[]models.Popular {
+func (s *Collector) Popular() *[]models.Popular {
 	slice := &[]models.Popular{}
 	reSlugBypass, err := reSlugBypass()
 	if err != nil {

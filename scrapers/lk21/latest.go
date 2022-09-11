@@ -75,7 +75,7 @@ func (s *Collector) Latest(page int) *[]models.Latest {
 	c.OnRequest(func(r *colly.Request) {
 		log.Println(r.URL.String())
 	})
-	url := fmt.Sprintf("https://lk21.コム/latest/page/%d", page)
+	url := fmt.Sprintf("http://149.56.24.226/latest/page/%d", page)
 	c.Visit(url)
 	// c.Wait()
 	return arr

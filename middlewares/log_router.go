@@ -10,6 +10,7 @@ import (
 
 func LogRouter(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		ip := r.Header.Get("X-Forwarded-For")
 		if ip == "" {
 			ip = strings.Split(r.RemoteAddr, ":")[0]
